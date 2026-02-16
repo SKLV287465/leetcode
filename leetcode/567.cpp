@@ -15,13 +15,21 @@ public:
 
         for (auto i = 0; i < s2.size(); ++i) {
             // remove the previous elem
-            if (i) {
-                char prev = s2[i - 1];
+            if (i >= s1.size()) {
+                char prev = s2[i - s1.size()];
                 // check if this was needed or not
+                if (have[prev] <= required[prev]) {
+                    ++needed;
+                }
+                --have[prev];
             }
 
             // add the next char and see if it decreases needed.
-            
+            char ne = s2[i];
+            if (have[ne] < required[ne]) {
+                --needed;
+            }
+            ++have[ne];
             if (!needed) return true;
         }
         return false;
